@@ -1,4 +1,4 @@
-import "dotenv/config";// new
+import "dotenv/config"; // new
 
 import express from "express";
 import { connectdb } from "./db/config.js";
@@ -13,7 +13,7 @@ app.use("/", allRouters);
 connectdb();
 dbinit()
   .then(() => console.log("DB sync"))
-  .catch((err) => console.log("Db not sync",err));
+  .catch((err) => console.log("Db not sync", err));
 
 app.listen(port, (error) => {
   if (!error) {

@@ -1,13 +1,14 @@
 import userModel from "../../model/user/index.js";
 import jwt from "jsonwebtoken";
 import { hash, compare } from "bcrypt";
+import mailsender from "../../mail/index.js";
 
 const userController = {
   create: async (req, res) => {
     try {
       const { userName, emailId, password } = req.body;
       // check -- new
-    
+
       const checkEmail = await userModel.findOne({
         where: {
           emailId,
@@ -45,9 +46,13 @@ const userController = {
     if (!comparepassword) {
       return res.json("invalid password");
     }
-    return res.json(`Logging successfuly`);
-    // neww
-    const token = jwt.sign(data);
+    mailsender();
+    const data = { user };
+    // token
+    const token = jwt.sign(data, "asdfghjklqwertyuiop", {
+      expiresIn: "14d",
+    });
+    return res.json(token);
   },
 
   delete: async (req, res) => {
@@ -99,7 +104,8 @@ const userController = {
 
       res.json({
         message: "user Updated",
-        User,ss
+        User,
+        ss,
       });
     } catch (error) {
       return res.status(500).json({
@@ -107,6 +113,5 @@ const userController = {
       });
     }
   },
-
 };
 export default userController;
