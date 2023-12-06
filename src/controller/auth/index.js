@@ -17,6 +17,7 @@ const userController = {
       if (checkEmail) {
         return res.json({ message: `user with this ${emailId} exists ` });
       }
+
       // ----   password hashed
       const hpassword = await hash(password, 10);
       // --- new
@@ -46,13 +47,23 @@ const userController = {
     if (!comparepassword) {
       return res.json("invalid password");
     }
+
+    // nodemailler
     mailsender();
-    const data = { user };
+
     // token
+    const id = user.id;
+    const email = user.emailId;
+    const data = { id, emailId };
     const token = jwt.sign(data, "asdfghjklqwertyuiop", {
       expiresIn: "14d",
     });
-    return res.json(token);
+
+    req.session.token = token;
+    req.session.user = data;
+    req.session.save();
+
+    return res.json({ message: "loggin successfully", token });
   },
 
   delete: async (req, res) => {

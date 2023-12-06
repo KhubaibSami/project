@@ -11,7 +11,7 @@ const likeValidators = {
       });
       const { error, value } = schema.validate(body);
       if (error) {
-        return res.status(404).json({ message: "bad happen", error });
+        return res.status(400).json({ message: "invalid data", error });
       }
       next();
     } catch (error) {

@@ -4,9 +4,9 @@ import { Sequelize } from "sequelize";
 const dbenv = process.env;
 
 const sequelize = new Sequelize(dbenv.DB_name, dbenv.DB_user,dbenv.DB_password ,{
-  host: "localhost",
-  port: 5000,
-  dialect: "postgres",
+  host: dbenv.DB_host,
+  port: dbenv.DB_port,
+  dialect: dbenv.DB_dialect,
   logging: false,
 });
 

@@ -1,13 +1,18 @@
-
 import nodemailer from "nodemailer";
+const mailenv = process.env;
 
 const mailsender = () => {
   var transport = nodemailer.createTransport({
-    host: "sandbox.smtp.mailtrap.io",
-    port: 2525,
+    host: mailenv.mailenv,
+    port: mailenv.mail_port,
+    from: mailenv.mail_from,
+    to: "bar@example.com, baz@example.com",
+    subject: "recieved",
+    text: "Hello world?",
+    html: "<b>Hello world?</b>",
     auth: {
-      user: "91ed72abece65a",
-      pass: "5a82102eda5dd5",
+      user: mailenv.mail_user,
+      pass: mailenv.envmail_pass,
     },
   });
 
