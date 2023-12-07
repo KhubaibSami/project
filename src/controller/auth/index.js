@@ -55,7 +55,7 @@ const userController = {
     const id = user.id;
     const email = user.emailId;
     const data = { id, emailId };
-    const token = jwt.sign(data, "asdfghjklqwertyuiop", {
+    const token = jwt.sign(data, process.env.token, {
       expiresIn: "14d",
     });
 
