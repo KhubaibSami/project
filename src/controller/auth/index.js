@@ -93,12 +93,11 @@ const userController = {
 
   update: async (req, res) => {
     try {
-      const { id } = req.params;
       const { userName, emailId, password } = req.body;
 
       const User = await userModel.findOne({
         where: {
-          id,
+          emailId,
         },
       });
       if (!User) {
@@ -122,6 +121,24 @@ const userController = {
       return res.status(500).json({
         message: "Something bad happened",
       });
+    }
+  },
+  search: async (req, res) => {
+    try {
+      const { emailId } = req.body;
+      const user = await userModel.findOne({
+        where: {
+          emailId,
+        },
+      });
+      if (!user) {
+        return res.status(404).json({
+          message: "user not found",
+        });
+      }
+      return res.status(200).json(user);
+    } catch (error) {
+      res.status(500).json({ message: "bad happens" });
     }
   },
 };
